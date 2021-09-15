@@ -78,74 +78,98 @@ void main_task(intptr_t unused) {
       // ev3_lcd_draw_string(lcdstr, 0, fonth * 7);
 
       if (cmd_id == 0) {
-	int motor_port = read_byte(serial);
-	int motor_type = read_byte(serial);
-	ev3_motor_config(motor_port, motor_type);
-	continue;
+        int motor_port = read_byte(serial);
+        int motor_type = read_byte(serial);
+        ev3_motor_config(motor_port, motor_type);
+        continue;
       }
 
       if (cmd_id == 1) {
-	enable_watchdog_task = 1;
-	continue;
+        enable_watchdog_task = 1;
+        continue;
       }
 
       if (cmd_id == 10) {
-	left_motor_port = read_byte(serial);
-	right_motor_port = read_byte(serial);
-	int drive = read_byte(serial) - 100;
-	int steer = read_byte(serial) - 100;
-	if (drive > 100) drive=100;
-	if (drive < -100) drive=-100;
-	if (steer > 100) steer=100;
-	if (steer < -100) steer=-100;
-	ev3_motor_steer(left_motor_port, right_motor_port, drive, steer);
-	continue;
+        left_motor_port = read_byte(serial);
+        right_motor_port = read_byte(serial);
+        int drive = read_byte(serial) - 100;
+        int steer = read_byte(serial) - 100;
+        if (drive > 100) drive=100;
+        if (drive < -100) drive=-100;
+        if (steer > 100) steer=100;
+        if (steer < -100) steer=-100;
+        ev3_motor_steer(left_motor_port, right_motor_port, drive, steer);
+        continue;
       }
 
       if (cmd_id == 100) {
-	uint8_t sensor_port = read_byte(serial);
-	uint8_t sensor_type = read_byte(serial);
-	ev3_sensor_config(sensor_port, sensor_type);
-	continue;
+        uint8_t sensor_port = read_byte(serial);
+        uint8_t sensor_type = read_byte(serial);
+        ev3_sensor_config(sensor_port, sensor_type);
+        continue;
       }
 
       if (cmd_id == 110) {
-	uint8_t touch_sensor_port = read_byte(serial);
-	uint8_t touch = ev3_touch_sensor_is_pressed(touch_sensor_port);
-	fputc((uint8_t)254, serial);
-	fputc((uint8_t)touch, serial);
-	continue;
+        uint8_t touch_sensor_port = read_byte(serial);
+        uint8_t touch = ev3_touch_sensor_is_pressed(touch_sensor_port);
+        fputc((uint8_t)254, serial);
+        fputc((uint8_t)touch, serial);
+        continue;
       }
 
       if (cmd_id == 120) {
-	uint8_t color_sensor_port = read_byte(serial);
-	uint8_t color = ev3_color_sensor_get_reflect(color_sensor_port);
-	fputc((uint8_t)254, serial);
-	fputc((uint8_t)color, serial);
-	continue;
+        uint8_t color_sensor_port = read_byte(serial);
+        uint8_t color = ev3_color_sensor_get_reflect(color_sensor_port);
+        fputc((uint8_t)254, serial);
+        fputc((uint8_t)color, serial);
+        continue;
+      }
+
+      if (cmd_id == 130) {
+        uint8_t gyro_sensor_port = read_byte(serial);
+        ev3_gyro_sensor_reset(gyro_sensor_port);
+        continue;
+      }
+
+      if (cmd_id == 131) {
+        uint8_t gyro_sensor_port = read_byte(serial);
+        int16_t angle = ev3_gyro_sensor_get_angle(gyro_sensor_port);
+        fputc((uint8_t)254, serial);
+        fputc((uint8_t)(angle >> 8), serial);
+        fputc((uint8_t)angle, serial);
+        continue;
+      }
+
+      if (cmd_id == 132) {
+        uint8_t gyro_sensor_port = read_byte(serial);
+        int16_t angle = ev3_gyro_sensor_get_rate(gyro_sensor_port);
+        fputc((uint8_t)254, serial);
+        fputc((uint8_t)(angle >> 8), serial);
+        fputc((uint8_t)angle, serial);
+        continue;
       }
 
       if (cmd_id == 200) {
         char str[100];
-	uint8_t line = read_byte(serial);
+        uint8_t line = read_byte(serial);
         int i = 0;
         for (i=0; i<100; i++) {
           uint8_t r = read_byte(serial);
           str[i] = r;
           if (r == 0) break;
         }
-	strcpy(lcdstr, str);
-	ev3_lcd_draw_string(lcdstr, 0, fonth * line);
-	continue;
+        strcpy(lcdstr, str);
+        ev3_lcd_draw_string(lcdstr, 0, fonth * line);
+        continue;
       }
       if (cmd_id == 210) {
-	uint8_t button = read_byte(serial);
-	bool_t button_state = ev3_button_is_pressed(button);
-	if (button_state) {
-	  button_state = 1;
-	}
-	fputc((uint8_t)254, serial);
-	fputc((uint8_t)button_state, serial);
+        uint8_t button = read_byte(serial);
+        bool_t button_state = ev3_button_is_pressed(button);
+        if (button_state) {
+          button_state = 1;
+        }
+        fputc((uint8_t)254, serial);
+        fputc((uint8_t)button_state, serial);
       }
     }
 }
