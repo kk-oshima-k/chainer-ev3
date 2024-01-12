@@ -102,6 +102,17 @@ void main_task(intptr_t unused) {
         continue;
       }
 
+      if (cmd_id == 11) {
+        int motor_port = read_byte(serial);
+        int degrees = read_byte(serial) << 8 + read_byte(serial);
+        int speed = read_byte(serial);
+        int blocking = read_byte(serial);
+        if (speed > 100) speed=100;
+        if (speed < 0) speed=0;
+        ev3_motor_rotate(motor_port, degrees, speed, blocking);
+        continue;
+      }
+
       if (cmd_id == 100) {
         uint8_t sensor_port = read_byte(serial);
         uint8_t sensor_type = read_byte(serial);
