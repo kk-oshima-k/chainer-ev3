@@ -107,10 +107,9 @@ void main_task(intptr_t unused) {
         int degrees = read_byte(serial) << 8;
         degrees += read_byte(serial);
         int speed = read_byte(serial);
-        int blocking = read_byte(serial);
         if (speed > 100) speed=100;
         if (speed < 0) speed=0;
-        ev3_motor_rotate(motor_port, degrees, speed, blocking);
+        ev3_motor_rotate(motor_port, degrees, speed, 0);
         continue;
       }
 
