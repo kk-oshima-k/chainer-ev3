@@ -32,6 +32,8 @@ EV3などの機材がなくてもPC上でシミュレーターを利用して本
 # EV3の環境構築
 - [こちらを参照](document/ev3_setup.md)
 
+※アフレル様のGoogle Colabを利用した構築手順が、Google Colab環境のバージョンアップで利用できなくなっています。
+
 # Raspberry Pi 3の環境構築
 - [こちらを参照](document/raspi_setup.md)
 

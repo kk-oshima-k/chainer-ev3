@@ -1,7 +1,7 @@
-# 注意： 現在はアフレル様よりGoogle Colabを利用した環境構築手順が提供されています。PCでビルド環境を作らずに済むためそちらを推奨します。
+~~注意： 現在はアフレル様よりGoogle Colabを利用した環境構築手順が提供されています。PCでビルド環境を作らずに済むためそちらを推奨します。~~
+# アフレル様のGoogle Colabを利用した構築手順が、Google Colab環境のバージョンアップで利用できなくなっています。
 
-
-
+- このページの内容を利用するか、windows/cygwinの場合、ev3/init_cygwin.sh, ev3/make_cygwin.shを利用してください。
 
 
 # EV3の環境構築（自分のPCでビルドを行う場合）
@@ -16,7 +16,7 @@
 
 - このレポジトリのクローンをします。
   ```
-  $ git clone git@/pfnet-research/chainer-ev3.git
+  $ git clone git@/kk-oshima-k/chainer-ev3.git
   ```
   
 - ev3rt-beta7-2-release.zipを[こちら](https://dev.toppers.jp/trac_user/ev3pf/wiki/Download#%E3%83%80%E3%82%A6%E3%83%B3%E3%83%AD%E3%83%BC%E3%83%89)からPCへダウンロードして展開します。
